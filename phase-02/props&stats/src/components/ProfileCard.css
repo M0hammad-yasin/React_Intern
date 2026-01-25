@@ -1,0 +1,123 @@
+.profile-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 10px 40px var(--shadow-color);
+  border: 1px solid var(--card-border);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: var(--accent-gradient);
+  opacity: 0.1;
+  border-radius: 20px 20px 0 0;
+}
+
+.profile-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px var(--shadow-color-hover);
+}
+
+.profile-card__avatar-container {
+  position: relative;
+  z-index: 1;
+}
+
+.profile-card__avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--avatar-border);
+  box-shadow: 0 8px 24px var(--shadow-color);
+  transition: transform 0.3s ease;
+}
+
+.profile-card:hover .profile-card__avatar {
+  transform: scale(1.05);
+}
+
+.profile-card__status-dot {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #00d68f, #00b377);
+  border-radius: 50%;
+  border: 3px solid var(--card-bg);
+  box-shadow: 0 2px 8px rgba(0, 214, 143, 0.4);
+}
+
+.profile-card__info {
+  text-align: center;
+  z-index: 1;
+}
+
+.profile-card__name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.profile-card__bio {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+  max-width: 220px;
+}
+
+.profile-card__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--accent-gradient);
+  color: white;
+  box-shadow: 0 4px 15px var(--btn-shadow);
+  z-index: 1;
+}
+
+.profile-card__btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px var(--btn-shadow-hover);
+}
+
+.profile-card__btn--following {
+  background: var(--following-bg);
+  color: var(--following-text);
+  box-shadow: none;
+  border: 2px solid var(--following-border);
+}
+
+.profile-card__btn--following:hover {
+  background: var(--following-hover-bg);
+  box-shadow: none;
+}
+
+.btn-icon {
+  font-size: 1rem;
+  font-weight: 700;
+}
