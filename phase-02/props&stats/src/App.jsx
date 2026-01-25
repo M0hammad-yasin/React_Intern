@@ -110,16 +110,26 @@ function App() {
               <p>No users found matching "{searchQuery}"</p>
             </div>
           )}
-          <div className='about__developer'>
-            <div className='about__developer-left'>
-              <p className='about__developer-left-text1'>Muhammad Yasin</p>
-              <p className='about__developer-left-text2'>Full Stack Developer</p>
+          <a
+            href="https://muhammad-yasin-dev.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="about__developer"
+          >
+            <div className="about__developer-left">
+              <p className="about__developer-left-text1">Muhammad Yasin</p>
+              <p className="about__developer-left-text2">Full Stack Developer</p>
             </div>
-            <div className='about__developer-right'>
-
-              <img className='about__developer-right-img' width={80} height={80} src={my_profile_pic} alt="Muhammad Yasin" />
+            <div className="about__developer-right">
+              <img
+                className="about__developer-right-img"
+                width={80}
+                height={80}
+                src={my_profile_pic}
+                alt="Muhammad Yasin"
+              />
             </div>
-          </div>
+          </a>
         </main>
 
         {/* Footer */}
