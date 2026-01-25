@@ -219,6 +219,10 @@ body {
 /* ===================================
    About Developer
    =================================== */
+a.about__developer {
+  text-decoration: none;
+}
+
 .about__developer {
   z-index: 100;
   border-radius: 50px;
