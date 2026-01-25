@@ -100,6 +100,7 @@ function App() {
                 avatar={profile.avatar}
                 isFollowed={profile.isFollowed}
                 onFollowToggle={() => handleFollowToggle(profile.id)}
+                searchQuery={searchQuery}
               />
             ))
           ) : (

@@ -1,6 +1,24 @@
 import './ProfileCard.css';
 
-function ProfileCard({ name, bio, avatar, isFollowed, onFollowToggle }) {
+// Function to highlight matching text
+function highlightText(text, query) {
+    if (!query || !query.trim()) {
+        return text;
+    }
+
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    const parts = text.split(regex);
+
+    return parts.map((part, index) =>
+        regex.test(part) ? (
+            <mark key={index} className="highlight">{part}</mark>
+        ) : (
+            part
+        )
+    );
+}
+
+function ProfileCard({ name, bio, avatar, isFollowed, onFollowToggle, searchQuery }) {
     return (
         <div className="profile-card">
             <div className="profile-card__avatar-container">
@@ -13,7 +31,7 @@ function ProfileCard({ name, bio, avatar, isFollowed, onFollowToggle }) {
             </div>
 
             <div className="profile-card__info">
-                <h3 className="profile-card__name">{name}</h3>
+                <h3 className="profile-card__name">{highlightText(name, searchQuery)}</h3>
                 <p className="profile-card__bio">{bio}</p>
             </div>
 
