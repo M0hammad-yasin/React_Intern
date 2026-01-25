@@ -4,6 +4,7 @@ import SearchBar from './components/SearchBar';
 import ThemeToggle from './components/ThemeToggle';
 import initialProfiles from './data/profiles';
 import './App.css';
+import my_profile_pic from './assets/profile_pic/my_profile_pic.JPG';
 
 function App() {
   // State for managing profiles with follow status
@@ -109,6 +110,16 @@ function App() {
               <p>No users found matching "{searchQuery}"</p>
             </div>
           )}
+          <div className='about__developer'>
+            <div className='about__developer-left'>
+              <p className='about__developer-left-text1'>Muhammad Yasin</p>
+              <p className='about__developer-left-text2'>Full Stack Developer</p>
+            </div>
+            <div className='about__developer-right'>
+
+              <img className='about__developer-right-img' width={80} height={80} src={my_profile_pic} alt="Muhammad Yasin" />
+            </div>
+          </div>
         </main>
 
         {/* Footer */}

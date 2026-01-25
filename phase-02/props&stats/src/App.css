@@ -217,8 +217,83 @@ body {
 }
 
 /* ===================================
-   Footer
+   About Developer
    =================================== */
+.about__developer {
+  z-index: 100;
+  border-radius: 50px;
+  background-color: var(--accent-color);
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 6px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+}
+
+.about__developer:hover {
+  padding-left: 20px;
+  border-radius: 50px;
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.5);
+}
+
+.about__developer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(24px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.about__developer:hover .about__developer-left {
+  max-width: 200px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.about__developer-left-text1 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.about__developer-left-text2 {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.about__developer-right {
+  display: flex;
+  background-color: var(--text-primary);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  border-radius: 50px;
+  flex-shrink: 0;
+}
+
+.about__developer-right-img {
+  border-radius: 50px;
+  transition: transform 0.3s ease;
+}
+
+.about__developer:hover .about__developer-right-img {
+  transform: scale(1.05);
+}
+
 
 .app__footer {
   text-align: center;
