@@ -1,0 +1,31 @@
+/* CounterDisplay.css */
+.counter-display {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.counter-value {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  transition: color 0.3s;
+}
+
+.counter-display.negative .counter-value {
+  color: #ef4444;
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+}
+
+.counter-label {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+}

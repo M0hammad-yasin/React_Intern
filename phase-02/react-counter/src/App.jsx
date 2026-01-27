@@ -1,30 +1,40 @@
+// App.js
 import React, { useState } from 'react';
-import Counter from './Counter';
+import CounterDisplay from './CounterDisplay';
+import CounterControls from './CounterControls';
+import './App.css';
 
 function App() {
-  // 1. Use State to manage counter value
+  // STATE MANAGEMENT: Single source of truth for counter value
   const [count, setCount] = useState(0);
 
-  // Handler functions to update state
-  const handleIncrement = () => {
-    setCount(count + 1);
-  };
-
-  const handleDecrement = () => {
-    setCount(count - 1);
-  };
+  // Handler functions that update state
+  const increment = () => setCount(prev => prev + 1);
+  const decrement = () => setCount(prev => prev - 1);
+  const reset = () => setCount(0);
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>React State & Props Demo</h1>
+    <div className="app-container">
+      <h1>React Counter Application</h1>
       
-      {/* 2. Use Props to pass data and functions from Parent to Child */}
-      <Counter 
+      {/* PROPS USAGE: Passing state and callbacks to child components */}
+      <CounterDisplay 
         count={count} 
-        onIncrement={handleIncrement} 
-        onDecrement={handleDecrement} 
+        isNegative={count < 0}
       />
       
+      <CounterControls 
+        onIncrement={increment}
+        onDecrement={decrement}
+        onReset={reset}
+        canDecrement={count > -10} // Business logic example
+        canIncrement={count < 10}
+      />
+      
+      <div className="info-box">
+        <p>State lives in <code>App</code> component</p>
+        <p>Props flow: Parent → Children (unidirectional data flow)</p>
+      </div>
     </div>
   );
 }
