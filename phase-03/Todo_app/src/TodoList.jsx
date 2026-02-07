@@ -1,10 +1,13 @@
-import React from 'react';
+// TodoList Component - Renders a list of todos
 import TodoItem from './TodoItem';
-
 const TodoList = ({ todos, onToggle, onDelete }) => {
+    if (todos.length === 0) {
+        return <p className="empty-state">No todos yet. Add one above!</p>;
+    }
+
     return (
-        <ul className="todo-list">
-            {todos.map((todo) => (
+        <div className="todo-list">
+            {todos.map(todo => (
                 <TodoItem
                     key={todo.id}
                     todo={todo}
@@ -12,8 +15,7 @@ const TodoList = ({ todos, onToggle, onDelete }) => {
                     onDelete={onDelete}
                 />
             ))}
-            {todos.length === 0 && <p style={{ textAlign: 'center' }}>No tasks yet!</p>}
-        </ul>
+        </div>
     );
 };
 
