@@ -137,8 +137,8 @@ App.jsx
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/nft-gallery.git
-cd nft-gallery
+git clone https://github.com/M0hammad-yasin/React_Intern.git
+cd React_Intern/phase-03/NFT_gallery
 
 # Install dependencies
 npm install
@@ -158,7 +158,7 @@ npm run preview
 
 ## Design System
 
-All design tokens are defined as CSS custom properties in `src/styles/globals.css`.
+All design tokens are defined as CSS custom properties in `src/styles/index.css`.
 
 ### Color Palette
 
