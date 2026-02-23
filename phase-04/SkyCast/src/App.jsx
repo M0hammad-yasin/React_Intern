@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import WeatherAPITest from './components/WeatherAPITest'
 import {
   Search,
   Wind,
@@ -101,6 +102,8 @@ function App() {
 
   return (
     <div className="app-container">
+      {/* ── Temporary API test – remove when UI is wired up ── */}
+      <WeatherAPITest />
       <header className="header">
         <div className="logo">
           <CloudSun size={32} strokeWidth={2.5} /> SkyCast
