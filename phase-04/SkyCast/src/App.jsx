@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
 import useWeatherAPI from './hooks/useWeatherAPI'
+import Loader from './components/Loader'
 import {
   Search,
   Wind,
@@ -86,8 +87,7 @@ function App() {
     return <Cloud size={size} color="#94a3b8" />;
   };
 
-  if (!weather && !loading) return <div className="loading">Loading SkyCast...</div>;
-
+  if (!weather && !error && !loading) return <div className="loading">Loading SkyCast...</div>;
   return (
     <div className="app-container">
       <header className="header">
@@ -105,92 +105,83 @@ function App() {
         </form>
       </header>
 
-      {error ? (
-        <div className="glass-card" style={{ textAlign: 'center', padding: '3rem' }}>
-          <p style={{ color: '#f87171' }}>{error}. Please try another city.</p>
-        </div>
-      ) : weather && (
-        <>
-          <main className="main-weather">
-            <div className="weather-info">
-              <h2 className="city-name">{weather.city}, <span style={{ fontSize: '1.5rem', opacity: 0.7 }}>{weather.country}</span></h2>
-              <div className="temp-huge">{weather.temp}°</div>
-              <p className="weather-desc">{weather.condition} • H:{weather.high}° L:{weather.low}°</p>
-            </div>
-            <div className="weather-icon-container" style={{ display: 'flex', justifyContent: 'center' }}>
-              {getWeatherIcon(weather.id, 180)}
-            </div>
-          </main>
+      {loading ? <Loader /> :
+        error ? (
+          <div className="glass-card" style={{ textAlign: 'center', padding: '3rem' }}>
+            <p style={{ color: '#f87171' }}>{error}. Please try another city.</p>
+          </div>
+        ) : weather && (
+          <>
+            <main className="main-weather">
+              <div className="weather-info">
+                <h2 className="city-name">{weather.city}, <span style={{ fontSize: '1.5rem', opacity: 0.7 }}>{weather.country}</span></h2>
+                <div className="temp-huge">{weather.temp}°</div>
+                <p className="weather-desc">{weather.condition} • H:{weather.high}° L:{weather.low}°</p>
+              </div>
+              <div className="weather-icon-container" style={{ display: 'flex', justifyContent: 'center' }}>
+                {getWeatherIcon(weather.id, 180)}
+              </div>
+            </main>
 
-          <section className="glass-card">
-            <h3 style={{ marginBottom: '1.5rem', fontWeight: 500, fontSize: '0.9rem', opacity: 0.8 }}>5-DAY FORECAST</h3>
-            <div className="forecast-grid">
-              {weather.forecast.map((f, i) => (
-                <div key={i} className="forecast-item">
-                  <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{f.day}</span>
-                  {getWeatherIcon(f.id, 32)}
-                  <span style={{ fontWeight: 600, marginTop: '5px' }}>{f.temp}°</span>
+            <section className="glass-card">
+              <h3 style={{ marginBottom: '1.5rem', fontWeight: 500, fontSize: '0.9rem', opacity: 0.8 }}>5-DAY FORECAST</h3>
+              <div className="forecast-grid">
+                {weather.forecast.map((f, i) => (
+                  <div key={i} className="forecast-item">
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{f.day}</span>
+                    {getWeatherIcon(f.id, 32)}
+                    <span style={{ fontWeight: 600, marginTop: '5px' }}>{f.temp}°</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="details-grid">
+              <div className="glass-card detail-item">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Wind size={16} color="var(--text-secondary)" />
+                  <span className="detail-label">Wind</span>
                 </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="details-grid">
-            <div className="glass-card detail-item">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Wind size={16} color="var(--text-secondary)" />
-                <span className="detail-label">Wind</span>
+                <span className="detail-value">{weather.wind} <small style={{ fontSize: '0.8rem' }}>km/h</small></span>
               </div>
-              <span className="detail-value">{weather.wind} <small style={{ fontSize: '0.8rem' }}>km/h</small></span>
-            </div>
-            <div className="glass-card detail-item">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Droplets size={16} color="var(--text-secondary)" />
-                <span className="detail-label">Humidity</span>
+              <div className="glass-card detail-item">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Droplets size={16} color="var(--text-secondary)" />
+                  <span className="detail-label">Humidity</span>
+                </div>
+                <span className="detail-value">{weather.humidity}%</span>
               </div>
-              <span className="detail-value">{weather.humidity}%</span>
-            </div>
-            <div className="glass-card detail-item">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Sun size={16} color="var(--text-secondary)" />
-                <span className="detail-label">UV Index</span>
+              <div className="glass-card detail-item">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Sun size={16} color="var(--text-secondary)" />
+                  <span className="detail-label">UV Index</span>
+                </div>
+                <span className="detail-value">{weather.uv}</span>
               </div>
-              <span className="detail-value">{weather.uv}</span>
-            </div>
-            <div className="glass-card detail-item">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Eye size={16} color="var(--text-secondary)" />
-                <span className="detail-label">Visibility</span>
+              <div className="glass-card detail-item">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Eye size={16} color="var(--text-secondary)" />
+                  <span className="detail-label">Visibility</span>
+                </div>
+                <span className="detail-value">{weather.visibility} <small style={{ fontSize: '0.8rem' }}>km</small></span>
               </div>
-              <span className="detail-value">{weather.visibility} <small style={{ fontSize: '0.8rem' }}>km</small></span>
-            </div>
-            <div className="glass-card detail-item">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Gauge size={16} color="var(--text-secondary)" />
-                <span className="detail-label">Pressure</span>
+              <div className="glass-card detail-item">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Gauge size={16} color="var(--text-secondary)" />
+                  <span className="detail-label">Pressure</span>
+                </div>
+                <span className="detail-value">{weather.pressure} <small style={{ fontSize: '0.8rem' }}>hPa</small></span>
               </div>
-              <span className="detail-value">{weather.pressure} <small style={{ fontSize: '0.8rem' }}>hPa</small></span>
-            </div>
-            <div className="glass-card detail-item">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Sunrise size={16} color="var(--text-secondary)" />
-                <span className="detail-label">Sunrise</span>
+              <div className="glass-card detail-item">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Sunrise size={16} color="var(--text-secondary)" />
+                  <span className="detail-label">Sunrise</span>
+                </div>
+                <span className="detail-value">{weather.sunrise}</span>
               </div>
-              <span className="detail-value">{weather.sunrise}</span>
-            </div>
-          </section>
-        </>
-      )}
-
-      {loading && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center',
-          justifyContent: 'center', backdropFilter: 'blur(8px)', zIndex: 100
-        }}>
-          <div className="loading-spinner"></div>
-        </div>
-      )}
+            </section>
+          </>
+        )}
     </div>
   )
 }

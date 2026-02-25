@@ -5,7 +5,7 @@
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
   --accent: #ffd700;
-  
+
   font-family: 'Outfit', 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -55,10 +55,12 @@ button {
   transition: all 0.25s ease;
   backdrop-filter: blur(10px);
 }
+
 button:hover {
   background-color: rgba(255, 255, 255, 0.2);
   border-color: var(--glass-border);
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -68,4 +70,24 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
   font-weight: 700;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
 }
