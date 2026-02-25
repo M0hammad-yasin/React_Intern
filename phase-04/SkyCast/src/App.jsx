@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
-import WeatherAPITest from './components/WeatherAPITest'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import useWeatherAPI from './hooks/useWeatherAPI'
 import {
   Search,
   Wind,
@@ -17,84 +18,71 @@ import './App.css'
 
 function App() {
   const [city, setCity] = useState('');
-  const [weather, setWeather] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { data, loading, error, fetchWeather } = useWeatherAPI();
 
-  const fetchWeather = async (cityName) => {
-    setLoading(true);
-    setError(null);
-    try {
-      // 1. Get Coordinates
-      const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&count=1&language=en&format=json`);
-      const geoData = await geoRes.json();
+  // Map raw OpenWeatherMap response → UI-friendly shape
+  const weather = data ? (() => {
+    const c = data.current;
+    const f = data.forecast;
 
-      if (!geoData.results || geoData.results.length === 0) {
-        throw new Error("City not found");
-      }
+    // Build a daily forecast: OWM /forecast gives 3-hour slots; group by date
+    const dailyMap = {};
+    f.list.forEach((item) => {
+      const date = item.dt_txt.split(' ')[0];
+      if (!dailyMap[date]) dailyMap[date] = [];
+      dailyMap[date].push(item);
+    });
 
-      const { latitude, longitude, name, country } = geoData.results[0];
-
-      // 2. Get Weather
-      const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m,surface_pressure,visibility&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,uv_index_max&timezone=auto`);
-      const data = await weatherRes.json();
-
-      const forecast = data.daily.time.slice(1, 6).map((time, i) => ({
-        day: new Date(time).toLocaleDateString('en-US', { weekday: 'short' }),
-        temp: Math.round(data.daily.temperature_2m_max[i + 1]),
-        code: data.daily.weather_code[i + 1]
+    const today = Object.keys(dailyMap)[0];
+    const forecastDays = Object.entries(dailyMap)
+      .filter(([date]) => date !== today)
+      .slice(0, 5)
+      .map(([date, items]) => ({
+        day: new Date(date).toLocaleDateString('en-US', { weekday: 'short' }),
+        temp: Math.round(Math.max(...items.map((i) => i.main.temp_max))),
+        id: items[0].weather[0].id,
       }));
 
-      setWeather({
-        city: name,
-        country: country,
-        temp: Math.round(data.current.temperature_2m),
-        condition: getWeatherDescription(data.current.weather_code),
-        code: data.current.weather_code,
-        high: Math.round(data.daily.temperature_2m_max[0]),
-        low: Math.round(data.daily.temperature_2m_min[0]),
-        humidity: data.current.relative_humidity_2m,
-        wind: data.current.wind_speed_10m,
-        uv: data.daily.uv_index_max[0],
-        visibility: data.current.visibility / 1000,
-        pressure: data.current.surface_pressure,
-        sunrise: new Date(data.daily.sunrise[0]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        forecast: forecast
-      });
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const sunriseMs = c.sys.sunrise * 1000;
+
+    return {
+      city: c.name,
+      country: c.sys.country,
+      temp: Math.round(c.main.temp),
+      condition: c.weather[0].description
+        .split(' ')
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' '),
+      id: c.weather[0].id,
+      high: Math.round(c.main.temp_max),
+      low: Math.round(c.main.temp_min),
+      humidity: c.main.humidity,
+      wind: Math.round(c.wind.speed * 3.6), // m/s → km/h
+      uv: '—',                              // not in this endpoint
+      visibility: (c.visibility / 1000).toFixed(1),
+      pressure: c.main.pressure,
+      sunrise: new Date(sunriseMs).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      forecast: forecastDays,
+    };
+  })() : null;
 
   useEffect(() => {
-    fetchWeather('London'); // Default city
-  }, []);
+    fetchWeather('Islamabad'); // Default city
+  }, [fetchWeather]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (city.trim()) fetchWeather(city);
   };
 
-  const getWeatherDescription = (code) => {
-    if (code === 0) return "Clear Sky";
-    if (code <= 3) return "Partly Cloudy";
-    if (code <= 48) return "Foggy";
-    if (code <= 57) return "Drizzle";
-    if (code <= 67) return "Rainy";
-    if (code <= 77) return "Snowy";
-    if (code <= 82) return "Showers";
-    if (code <= 99) return "Thunderstorm";
-    return "Cloudy";
-  };
-
-  const getWeatherIcon = (code, size = 24) => {
-    if (code === 0) return <Sun size={size} color="#fbbf24" />;
-    if (code <= 3) return <CloudSun size={size} color="#94a3b8" />;
-    if (code <= 48) return <Cloud size={size} color="#64748b" />;
-    if (code <= 67) return <CloudRain size={size} color="#60a5fa" />;
-    if (code <= 99) return <CloudLightning size={size} color="#818cf8" />;
+  // OpenWeatherMap uses weather condition IDs (https://openweathermap.org/weather-conditions)
+  const getWeatherIcon = (id, size = 24) => {
+    if (id === 800) return <Sun size={size} color="#fbbf24" />;
+    if (id >= 801 && id <= 804) return <CloudSun size={size} color="#94a3b8" />;
+    if (id >= 700 && id < 800) return <Cloud size={size} color="#64748b" />; // atmosphere
+    if (id >= 500 && id < 600) return <CloudRain size={size} color="#60a5fa" />; // rain
+    if (id >= 300 && id < 400) return <CloudRain size={size} color="#93c5fd" />; // drizzle
+    if (id >= 200 && id < 300) return <CloudLightning size={size} color="#818cf8" />; // thunderstorm
     return <Cloud size={size} color="#94a3b8" />;
   };
 
@@ -102,8 +90,6 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* ── Temporary API test – remove when UI is wired up ── */}
-      <WeatherAPITest />
       <header className="header">
         <div className="logo">
           <CloudSun size={32} strokeWidth={2.5} /> SkyCast
@@ -132,7 +118,7 @@ function App() {
               <p className="weather-desc">{weather.condition} • H:{weather.high}° L:{weather.low}°</p>
             </div>
             <div className="weather-icon-container" style={{ display: 'flex', justifyContent: 'center' }}>
-              {getWeatherIcon(weather.code, 180)}
+              {getWeatherIcon(weather.id, 180)}
             </div>
           </main>
 
@@ -142,7 +128,7 @@ function App() {
               {weather.forecast.map((f, i) => (
                 <div key={i} className="forecast-item">
                   <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{f.day}</span>
-                  {getWeatherIcon(f.code, 32)}
+                  {getWeatherIcon(f.id, 32)}
                   <span style={{ fontWeight: 600, marginTop: '5px' }}>{f.temp}°</span>
                 </div>
               ))}
