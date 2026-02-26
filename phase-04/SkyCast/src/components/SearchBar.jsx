@@ -24,6 +24,11 @@ const SearchBar = ({ onSearch, isLoading }) => {
                         className="neu-input search-input"
                         aria-label="City name"
                     />
+                    {city && !isLoading && (
+                        <button className="clear-icon" onClick={() => setCity("")} aria-label="Clear search">
+                            &times;
+                        </button>
+                    )}
                 </div>
                 <button type="submit" disabled={isLoading || !city.trim()} className="neu-button search-btn">
                     {isLoading ? (
