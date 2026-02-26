@@ -1,0 +1,50 @@
+.bg-orbs {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+.blob-1 {
+    width: 24rem;
+    height: 24rem;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.15), transparent 70%);
+    top: 10%;
+    left: -10%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.blob-2 {
+    width: 20rem;
+    height: 20rem;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1), transparent 70%);
+    top: 50%;
+    right: -5%;
+    animation: float 6s ease-in-out infinite 2s;
+}
+
+.blob-3 {
+    width: 16rem;
+    height: 16rem;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.08), transparent 70%);
+    bottom: 10%;
+    left: 30%;
+    animation: float 6s ease-in-out infinite 4s;
+}
+
+.blob-4 {
+    width: 12rem;
+    height: 12rem;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.2), transparent 70%);
+    top: 30%;
+    right: 20%;
+    animation: pulse-glow 4s ease-in-out infinite 1s;
+}

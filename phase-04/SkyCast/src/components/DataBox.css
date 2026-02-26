@@ -1,0 +1,46 @@
+.neu-data-box {
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.6), rgba(30, 41, 59, 0.4));
+    border-radius: 16px;
+    box-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.3),
+        -2px -2px 8px rgba(255, 255, 255, 0.03),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    padding: 1rem;
+}
+
+.data-box-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.data-box-icon {
+    color: #22d3ee;
+}
+
+.data-box-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.data-box-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.data-box-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.data-box-unit {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-left: 0.25rem;
+}

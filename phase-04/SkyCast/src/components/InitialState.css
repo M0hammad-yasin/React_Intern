@@ -1,0 +1,58 @@
+.initial-state {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.initial-icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(20, 184, 166, 0.1));
+    margin-bottom: 1.5rem;
+}
+
+.initial-icon-circle svg {
+    width: 3rem;
+    height: 3rem;
+    color: #22d3ee;
+}
+
+.initial-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.initial-desc {
+    color: var(--text-secondary);
+    max-width: 28rem;
+    margin: 0 auto;
+}
+
+.initial-suggestions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.suggestion-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.2s;
+}
+
+.suggestion-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
