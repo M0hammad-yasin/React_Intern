@@ -32,7 +32,7 @@ export default function App() {
         {/* Header */}
         <header className="app-header animate-slide-up">
           <h1 className="app-title">
-            Weather<span>Dashboard</span>
+            Sky<span>Cast</span>
           </h1>
           <p className="app-subtitle">Real-time weather data with beautiful visualization</p>
         </header>

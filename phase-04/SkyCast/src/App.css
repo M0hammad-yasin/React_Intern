@@ -134,8 +134,10 @@
 }
 
 /* ─── Search Section ─── */
+/* CRITICAL: position:relative is required for z-index to take effect */
 .search-section {
-  z-index: 999999;
+  position: relative;
+  z-index: 100;
   margin-bottom: 3rem;
 }
 
@@ -175,10 +177,12 @@
 }
 
 /* ─── Content Area ─── */
+/* Lower stacking context so the search dropdown always wins */
 .content-area {
+  position: relative;
+  z-index: 1;
   max-width: 56rem;
   margin: 0 auto;
-  z-index: -999;
 }
 
 /* ─── Footer ─── */

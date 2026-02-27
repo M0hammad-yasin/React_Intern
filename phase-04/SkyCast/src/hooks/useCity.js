@@ -35,7 +35,7 @@ const useCity = () => {
         }
     }, [])
 
-    return { cityData, loadingCity, errorCity, fetchCity };
+    return { cityData, loadingCity, setCityData, errorCity, fetchCity };
 }
 
 export default useCity;

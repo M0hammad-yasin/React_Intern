@@ -20,6 +20,7 @@
 .search-input-wrap {
     flex: 1;
     position: relative;
+    z-index: 99999;
 }
 
 .search-icon {
@@ -79,30 +80,75 @@
     background: rgba(255, 255, 255, 0.05);
 }
 
+/* ─── Cities Dropdown ─── */
 .cities-dropdown {
     position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--accent-light);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    margin-top: 0.5rem;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    border-radius: 16px;
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
     z-index: 99999;
+    overflow: hidden;
+    animation: fadeIn 0.15s ease-out forwards;
 }
 
 .cities-dropdown button {
     width: 100%;
-    background-color: var(--bg-card);
-    padding: 0.5rem 1rem;
+    background: transparent;
+    padding: 0.75rem 1rem;
     cursor: pointer;
-    border-radius: var(--radius-sm);
     border: none;
     outline: none;
-    color: var(--text-primary);
+    color: var(--text-secondary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: background 0.15s ease, color 0.15s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.cities-dropdown button:last-child {
+    border-bottom: none;
 }
 
 .cities-dropdown button:hover {
-    background: var(--bg-card);
-    color: var(--accent-light);
+    background: rgba(6, 182, 212, 0.12);
+    color: #67e8f9;
+}
+
+.cities-dropdown button:hover .city-dot {
+    background: #06b6d4;
+    box-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+}
+
+.city-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.city-name {
+    font-weight: 500;
+    color: inherit;
+}
+
+.city-country {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: auto;
+    padding-left: 0.5rem;
 }
