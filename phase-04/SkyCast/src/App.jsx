@@ -18,7 +18,10 @@ export default function App() {
     fetchWeather("Islamabad");
   }, [fetchWeather]);
 
-  const handleSearch = useCallback((city) => fetchWeather(city), [fetchWeather]);
+  const handleSearch = useCallback((city) =>
+    // setSearchHistory(pre=>[...pre,city]);
+    fetchWeather(city), [fetchWeather]);
+
   const handleDismissError = useCallback(() => setError(null), [setError]);
 
   return (

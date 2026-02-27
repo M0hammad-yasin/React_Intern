@@ -1,15 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SearchIcon, SpinnerIcon } from "./Icons";
 import "./SearchBar.css";
+import useCity from "../hooks/useCity";
+
+const Cities = ({ cityData }) => {
+    console.log("cityData ", cityData);
+    return (
+        <div className="cities-dropdown">
+            {cityData?.map((city) => (
+                <button key={city.id}>{city.name}</button>
+            ))}
+        </div>
+    );
+};
 
 const SearchBar = ({ onSearch, isLoading }) => {
+    const { cityData, fetchCity } = useCity();
     const [city, setCity] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (city.trim()) onSearch(city.trim());
-    };
 
+    };
+    const handleOnchange = (e) => {
+        setCity(e.target.value);
+        fetchCity(city);
+    }
     return (
         <form onSubmit={handleSubmit} className="search-form">
             <div className="search-row">
@@ -18,7 +35,7 @@ const SearchBar = ({ onSearch, isLoading }) => {
                     <input
                         type="text"
                         value={city}
-                        onChange={(e) => setCity(e.target.value)}
+                        onChange={handleOnchange}
                         placeholder="Search city..."
                         disabled={isLoading}
                         className="neu-input search-input"
@@ -37,6 +54,9 @@ const SearchBar = ({ onSearch, isLoading }) => {
                         <><SearchIcon /><span>Search</span></>
                     )}
                 </button>
+                <div >
+                    <Cities cityData={cityData} />
+                </div>
             </div>
         </form>
     );

@@ -1,4 +1,5 @@
 .search-form {
+    z-index: 999;
     width: 100%;
     max-width: 36rem;
     margin: 0 auto;
@@ -76,4 +77,32 @@
 .clear-icon:hover {
     color: var(--accent-light);
     background: rgba(255, 255, 255, 0.05);
+}
+
+.cities-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    margin-top: 0.5rem;
+    z-index: 99999;
+}
+
+.cities-dropdown button {
+    width: 100%;
+    background-color: var(--bg-card);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+}
+
+.cities-dropdown button:hover {
+    background: var(--bg-card);
+    color: var(--accent-light);
 }

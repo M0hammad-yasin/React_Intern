@@ -135,6 +135,7 @@
 
 /* ─── Search Section ─── */
 .search-section {
+  z-index: 999999;
   margin-bottom: 3rem;
 }
 
@@ -177,6 +178,7 @@
 .content-area {
   max-width: 56rem;
   margin: 0 auto;
+  z-index: -999;
 }
 
 /* ─── Footer ─── */
